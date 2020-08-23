@@ -20,24 +20,32 @@
     <button v-on:click="components = 'form-two'">use form two</button> -->
 
     <!-- BLOG -->
-    <keep-alive>
+    <!-- ADD BLOG -->
+    <!-- <keep-alive>
       <add-blog></add-blog>
-    </keep-alive>
+    </keep-alive> -->
 
+  <!-- SHOW BLOG -->
+  <navbar></navbar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import header from './components/NavBar'
   // import formHelper from './components/formHelper'
   // import formOne from './components/formOne'
   // import formTwo from './components/formTwo'
-    import addBlog from './components/addBlog'
+    //  import addBlog from './components/addBlog'
+    //  import showBlogs from './components/showBlogs'
   export default {
     components: {
       // 'formHelper': formHelper
       // 'form-one': formOne,
       // 'form-two': formTwo
-          'add-blog': addBlog
+        //   'add-blog': addBlog,
+        // 'show-blogs': showBlogs
+        'navbar': header
     },
     data() {
       return {

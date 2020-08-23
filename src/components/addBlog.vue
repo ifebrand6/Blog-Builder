@@ -1,27 +1,42 @@
 <template>
     <div id="add-blog">
         <h2>Add a New Blog Post</h2>
-        <form>
+        <form v-if="!submitted">
             <label>Blog Title:</label>
             <input type="text" v-model.lazy="blog.title" required />
             <label>Blog Content:</label>
             <textarea v-model.lazy.trim="blog.content"></textarea>
-            <div id="check-box">
-                <span v-for="(category,index) in categories" :key=index>
-                    <label> {{category}}</label>
-                    <input type="checkbox" v-bind:value='category' v-model='blog.categories'>
-                </span>
+            <div id="checkboxes">
+                <p>Blog Categories:</p>
+                <label>Ninjas</label>
+                <input type="checkbox" value="ninjas" v-model="blog.categories" />
+                <label>Wizards</label>
+                <input type="checkbox" value="wizards" v-model="blog.categories" />
+                <label>Mario</label>
+                <input type="checkbox" value="mario" v-model="blog.categories" />
+                <label>Cheese</label>
+                <input type="checkbox" value="cheese" v-model="blog.categories" />
             </div>
+            <label>Author:</label>
+            <select v-model="blog.author">
+                <option v-for="(author,key) in authors" :key="key">{{ author }}</option>
+            </select>
+            <hr />
+            <button v-on:click.prevent="post">Add Blog</button>
         </form>
+        <div v-if="submitted">
+            <h3>Thanks for adding your post</h3>
+        </div>
         <div id="preview">
             <h3>Preview blog</h3>
             <p>Blog title: {{ blog.title }}</p>
             <p>Blog content:</p>
             <p style="white-space: pre">{{ blog.content }}</p>
-            <p>Blog Category</p>
+            <p>Blog Categories:</p>
             <ul>
-                <li v-for="(category,index) in blog.categories" :key=index>{{category}}</li>
-            </ul>  
+                <li v-for="(category,key) in blog.categories" :key="key">{{ category }}</li>
+            </ul>
+            <p>Author: {{ blog.author }}</p>
         </div>
     </div>
 </template>
@@ -34,12 +49,23 @@ export default {
             blog: {
                 title: '',
                 content: '',
-                categories: []
+                categories: [],
+                author: ''
             },
-            categories: ["Art", 'Science', 'Technology', 'Business']
+            authors: ['The Net Ninja', 'The Angular Avenger', 'The Vue Vindicator'],
+            submitted: false
         }
     },
     methods: {
+        post: function(){
+            this.$http.post('https://cisca-planner.firebaseio.com/post',this.blog).then(function(data){
+                console.log(data);
+                this.submitted = true;
+            }).catch(function (error) {
+                console.error('xxx: ' + error)
+                console.log(error)
+            });
+        }
     }
 }
 </script>
@@ -69,13 +95,12 @@ input[type="text"], textarea{
 h3{
     margin-top: 10px;
 }
-
-#check-box input{
+#checkboxes input{
     display: inline-block;
     margin-right: 10px;
-
- }
-#check-box label{
-        display: inline-block;
- }
+}
+#checkboxes label{
+    display: inline-block;
+    margin-top: 0;
+}
 </style>
