@@ -58,12 +58,10 @@ export default {
     },
     methods: {
         post: function(){
-            this.$http.post('https://cisca-planner.firebaseio.com/post',this.blog).then(function(data){
-                console.log(data);
+            this.$http.post('https://test-7f255.firebaseio.com/posts.json',this.blog).then(function(data){
                 this.submitted = true;
             }).catch(function (error) {
                 console.error('xxx: ' + error)
-                console.log(error)
             });
         }
     }

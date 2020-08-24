@@ -8,7 +8,7 @@
             <router-link v-bind:to="'/blog/' + blog.id" >
                 <h2 v-rainbow>{{ blog.title | to-uppercase }}</h2>
             </router-link>
-            <article>{{ blog.body | to-concat}}</article>
+            <article>{{ blog.content | to-concat}}</article>
         </div>
     </div>
 </template>
@@ -25,9 +25,20 @@ export default {
     methods: {
     },
     created() {
-        this.$http.get('http://jsonplaceholder.typicode.com/posts').then(function(data){
-            this.blogs = data.body.slice(0,10);
-        });
+        this.$http.get('https://test-7f255.firebaseio.com/posts.json').then(function(data){
+            return data.json()
+        }).then(
+            (data)=>{
+               let arrContainer = [];
+               for (const key in data) {
+                  data[key].id = key
+                  arrContainer.push(data[key])
+               }
+               this.blogs = arrContainer
+            }
+        ).catch((err)=>{
+            console.log('Reason for error: ' + err)
+        })
     },
     filters: {
         'to-uppercase': function (value) {

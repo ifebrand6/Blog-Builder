@@ -8,6 +8,8 @@ import VueResource from 'vue-resource';
 import VueRouter from 'vue-router'
 import Routers from './router'
 
+
+
 Vue.config.productionTip = false
 
 // API getters
@@ -24,6 +26,8 @@ const router = new VueRouter(
     mode: "history"
   }
 )
+
+
 
 // Custom directive
 // Vue.directive('rainbow',{
