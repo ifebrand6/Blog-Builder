@@ -1,4 +1,4 @@
-# learn-app
+# Blog-Builder
 
 ## Project setup
 ```
